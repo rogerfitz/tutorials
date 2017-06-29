@@ -80,12 +80,15 @@ def data():
     leaveAfter=request.args.get("leaveAfter")
     leaveAfter=datetime.datetime.strptime(leaveAfter,"%Y-%m-%dT%H:%M")
     USERS_API_KEY=request.args.get("API_KEY",default=API_KEY)
-    if USERS_API_KEY==API_KEY:
-       raise GAPIError("API Key no longer valid", status_code=31337)
     now=datetime.datetime.now()
     if leaveAfter<now:
         leaveAfter=now
-    return jsonify(getChartData(request.args.get("startingAddress"),request.args.get("destinationAddress"),leaveAfter,8, USERS_API_KEY))
+    try:
+        response=getChartData(request.args.get("startingAddress"),request.args.get("destinationAddress"),leaveAfter,8, USERS_API_KEY)
+        return jsonify(response)
+    except:
+        raise GAPIError("API Key no longer valid", status_code=31337)
+    
     
 @app.errorhandler(GAPIError)
 def handle_invalid_usage(error):
