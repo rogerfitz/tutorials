@@ -1,0 +1,24 @@
+#chart{
+    width: 90%
+}
+
+#inputs{
+    height: 60px;
+}
+
+div{
+    margin: 10px;
+}
+
+.c3-legend-item ,.c3-tooltip th ,.c3-tooltip td{
+ font-size: 16px;
+}
+
+#loader-1 {
+   visibility: hidden;
+   height: 0px;
+}
+
+#apiKeyLabel,#apiKeyInput,#gmapsP {
+   visibility: hidden;
+}
