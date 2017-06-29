@@ -1,13 +1,17 @@
 #chart{
-    width: 90%
+    width: 90%;
+    max-width: 1000px;
+    min-width: 600px;
+    min-height: 300px;
 }
 
 #inputs{
-    height: 60px;
+    min-height: 100px;
 }
 
 div{
     margin: 10px;
+    display: block;
 }
 
 .c3-legend-item ,.c3-tooltip th ,.c3-tooltip td{
