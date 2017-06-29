@@ -72,7 +72,7 @@ def getChartData(starting_address,destination_address, leave_after, hours_to_gra
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('index.html', API_KEY=API_KEY)
     
 @app.route('/data')
 def data():
