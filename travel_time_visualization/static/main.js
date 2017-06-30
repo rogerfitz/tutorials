@@ -49,7 +49,7 @@ function submit(){
     var params={}
     params['startingAddress'] = document.getElementById("startingAddress").value;
     params['destinationAddress'] = document.getElementById("destinationAddress").value;
-    params['leaveAfter'] = document.getElementById("leaveAfter").value;
+    params['leaveAfter'] = (new Date(document.getElementById("leaveAfter").value)).getTime();
     params['API_KEY'] = document.getElementById("apiKeyInput").value;
     url_string="/data?"
     for (var key in params) {
@@ -229,8 +229,15 @@ var col_data=[['best_guess',
   1498779900000,
   1498780800000,
   1498781700000]]
-
+  
+var now = new Date().toString();
+var TZ = now.indexOf('(') > -1 ?
+now.match(/\([^\)]+\)/)[0].match(/[A-Z]/g).join('') :
+now.match(/[A-Z]{3,4}/)[0];
+if (TZ == "GMT" && /(GMT\W*\d{4})/.test(now)) TZ = RegExp.$1;
+document.getElementById("timezone").innerHTML+=TZ;
 genChart(col_data);
+
 function genChart(col_data){
     var chart = c3.generate({
         data: {
@@ -245,7 +252,7 @@ function genChart(col_data){
                 tick: {
                     format: '%I:%M %p'
                 },
-                lable: 'Departure Time'
+                label: 'Departure Time (starting timezone)'
             },
             y: {
                 label: 'Trip Duration (minutes)'

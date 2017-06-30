@@ -7,6 +7,7 @@ import pandas as pd
 import sys
 import logging
 from itertools import repeat
+
 app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.DEBUG)
@@ -14,6 +15,7 @@ app.logger.setLevel(logging.DEBUG)
 from multiprocessing.dummy import Pool as ThreadPool 
 pool = ThreadPool(20) 
 BASE_URL="https://maps.googleapis.com/maps/api/"
+app.logger.debug(datetime.datetime.fromtimestamp(1498924020))
 
 class GAPIError(Exception):
     status_code = 31337
@@ -78,13 +80,13 @@ def index():
 def data():
     app.logger.debug(request.args)  
     leaveAfter=request.args.get("leaveAfter")
-    leaveAfter=datetime.datetime.strptime(leaveAfter,"%Y-%m-%dT%H:%M")
+    leaveAfter=datetime.datetime.fromtimestamp(int(leaveAfter)/1000)
     USERS_API_KEY=request.args.get("API_KEY",default=API_KEY)
     now=datetime.datetime.now()
     if leaveAfter<now:
         leaveAfter=now
     try:
-        response=getChartData(request.args.get("startingAddress"),request.args.get("destinationAddress"),leaveAfter,8, USERS_API_KEY)
+        response=getChartData(request.args.get("startingAddress"),request.args.get("destinationAddress"),leaveAfter,1, USERS_API_KEY)
         return jsonify(response)
     except:
         raise GAPIError("API Key no longer valid", status_code=31337)

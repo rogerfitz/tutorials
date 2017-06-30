@@ -9,7 +9,7 @@
     <div id="inputs">
         <label>Starting Address: </label><input type="text" name="startingAddress" id="startingAddress" value="Chicago, IL 60606, United States" onClick="this.setSelectionRange(0, this.value.length)"><br>
         <label>Destination Address: </label><input type="text" name="destinationAddress", id="destinationAddress" value="Oak Forest, IL, United States" onClick="this.setSelectionRange(0, this.value.length)"><br>
-        <label>Leave After: </label><input id="leaveAfter" type="datetime-local" value="2017-06-29T00:00:00">
+        <label id="timezone">Leave After: <input id="leaveAfter" type="datetime-local" value="2017-06-29T00:00:00"></label>
         <input id="submit" type="button" value="Compute" onclick="submit();" />
         <label id="apiKeyLabel">API Key: <input id="apiKeyInput" type="text">* Our daily free tier was exceeded please click "GET A KEY" on the <a href="https://developers.google.com/maps/documentation/javascript/usage" target="_blank">Google Maps API Docs</a> and enter it here.</label>
     </div>
@@ -18,7 +18,7 @@
     <div id="info">
         <p id="gmapsP"><a id="gmapsHref" href="" target="_blank">Google Maps Link</a></p>
         <h2>Information</h2>
-        <p>This visualization was created as part of a Visualization Vednesday series. Please see the <a href="http://www.ergosum.co/travel-times-interactive-version/">visualization writeup</a> for more details.</p>
+        <p>This visualization was created as part of a Visualization Vednesday series and is proudly powered by Google Maps. Please see the <a href="http://www.ergosum.co/travel-times-interactive-version/">visualization writeup</a> for more details.</p>
         <p><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a></p>
     <!-- Load c3.css -->
     <link href="/static/c3.min.css" rel="stylesheet">
