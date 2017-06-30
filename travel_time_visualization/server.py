@@ -86,7 +86,7 @@ def data():
     if leaveAfter<now:
         leaveAfter=now
     try:
-        response=getChartData(request.args.get("startingAddress"),request.args.get("destinationAddress"),leaveAfter,1, USERS_API_KEY)
+        response=getChartData(request.args.get("startingAddress"),request.args.get("destinationAddress"),leaveAfter,8, USERS_API_KEY)
         return jsonify(response)
     except:
         raise GAPIError("API Key no longer valid", status_code=31337)
