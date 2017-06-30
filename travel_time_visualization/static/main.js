@@ -258,7 +258,10 @@ function genChart(col_data){
                 label: 'Trip Duration (minutes)'
                 },
                 
-        }
+        },
+        title: {
+  text: 'Car Travel Times with Traffic -- Powered by Google Maps'
+}
     });
 }
 

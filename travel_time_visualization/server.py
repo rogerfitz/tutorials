@@ -9,7 +9,8 @@ import logging
 from itertools import repeat
 
 app = Flask(__name__)
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
+gunicorn_error_logger = logging.getLogger('gunicorn.error')
+app.logger.handlers.extend(gunicorn_error_logger.handlers)
 app.logger.setLevel(logging.DEBUG)
 
 from multiprocessing.dummy import Pool as ThreadPool 
