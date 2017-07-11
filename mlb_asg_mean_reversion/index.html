@@ -1,0 +1,245 @@
+<!doctype html>
+<title>MLB Team Performance ASG Break</title>
+
+<!-- SlickGrid -->
+<link rel="stylesheet" href="lib/slickgrid/slick.grid.css" type="text/css"/>
+<link rel="stylesheet" href="lib/slickgrid/jquery-ui-1.8.16.custom.css" type="text/css"/>
+<link rel="stylesheet" href="lib/slickgrid/examples.css" type="text/css"/>
+<link rel="stylesheet" href="lib/slickgrid/slick.pager.css" type="text/css"/>
+<script src="lib/slickgrid/jquery-1.7.min.js"></script>
+<script src="lib/slickgrid/jquery.event.drag-2.0.min.js"></script>
+<script src="lib/slickgrid/slick.core.js"></script>
+<script src="lib/slickgrid/slick.grid.js"></script>
+<script src="lib/slickgrid/slick.pager.js"></script>
+<script src="lib/slickgrid/slick.dataview.js"></script>
+<!-- End SlickGrid -->
+
+<link rel="stylesheet" type="text/css" href="lib/d3.parcoords.css">
+<link rel="stylesheet" type="text/css" href="lib/style.css">
+<style>
+body, html {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+}
+#grid, #pager {
+  position: fixed;
+  width: 100%;
+}
+#grid {
+  bottom: 0;
+  height: 300px;
+}
+#pager {
+  bottom: 306px;
+  height: 20px;
+}
+.slick-row:hover {
+  font-weight: bold;
+  color: #069;
+}
+</style>
+<script src="lib/d3.min.js"></script>
+<script src="lib/d3.parcoords.custom.js"></script><!-- some hacks to force the range on % fields-->
+<script src="lib/underscore.js"></script>
+<script src="lib/underscore.math.js"></script>
+<script src="lib/divgrid.js"></script>
+<div id="header"><h1 style="text-align:center">MLB Team Performance with All Star Break</h1></div>
+<div id="example" class="parcoords" style="height:240px;"></div>
+<div id="grid"></div>
+<div id="pager"></div>
+<script id="brushing">
+var parcoords = d3.parcoords()("#example")
+    .alpha(0.2)
+    .mode("queue") // progressive rendering
+    .height(d3.max([document.body.clientHeight-326, 220]))
+    .margin({
+      top: 36,
+      left: 8,
+      right: 0,
+      bottom: 60
+    });
+    
+//Add colors
+// this section uses underscore.js and underscore.math
+var pcz;
+
+// color scale for zscores
+var zcolorscale = d3.scale.linear()
+  .domain([-2,-0.5,0.5,2])
+  .range(["brown", "#999", "#999", "steelblue"])
+  .interpolate(d3.interpolateLab);
+
+// load csv file and create the chart
+d3.csv('data/paracoord_asg_vals.csv', function(data) {
+  // slickgrid needs each data element to have an id
+  data.forEach(function(d,i) { d.id = d['SEASON']+d['original_team-id'] || i; });
+
+  //Use dimensions to fix issues with booleans not sorting nicely with 1,0
+  pcz = parcoords
+    .data(data)
+    .hideAxis(['Historic Team ID', 'opp_ID','date','id','games_played','wins','losses'])
+    .dimensions({
+    "Team":{type: "string"},
+        "Season":{type: "number"},
+        "Start Win%":{type: "number"},
+        "Pre-ASG%":{type: "number"},
+        "Post-ASG%":{type: "number"},
+        "Final%":{type: "number"},    
+        "Playoffs":{
+            type: "number",
+            ticks: 1
+            },
+        "Pennant":{
+            type: "number",
+            ticks: 1
+            },
+        "World Series":{
+            type: "number",
+            ticks: 1
+            }
+		})
+    .render()
+    .reorderable()
+    .brushMode("1D-axes")
+    .interactive();
+    
+    change_color("Final%");
+      // click label to activate coloring
+      pcz.svg.selectAll(".dimension")
+        .on("click", change_color)
+        .selectAll(".label")
+        .style("font-size", "14px");
+        
+        
+    $("text").each(function(i,text){
+        if (text.innerHTML==="1"){
+            $(text).html("Yes")
+            text.setAttribute("y",10)
+            }
+        else if (text.innerHTML==="0"){
+            $(text).html("No")
+            text.setAttribute("y",parseInt(text.getAttribute("y"))+10)
+            }
+    })
+    
+  // setting up grid
+  var column_keys = d3.keys(data[0]);
+  var columns = column_keys.map(function(key,i) {
+    return {
+      id: key,
+      name: key,
+      field: key,
+      sortable: true
+    }
+  });
+
+  var options = {
+    enableCellNavigation: true,
+    enableColumnReorder: false,
+    multiColumnSort: false
+  };
+
+  var dataView = new Slick.Data.DataView();
+  var grid = new Slick.Grid("#grid", dataView, columns, options);
+  var pager = new Slick.Controls.Pager(dataView, grid, $("#pager"));
+
+  // wire up model events to drive the grid
+  dataView.onRowCountChanged.subscribe(function (e, args) {
+    grid.updateRowCount();
+    grid.render();
+  });
+
+  dataView.onRowsChanged.subscribe(function (e, args) {
+    grid.invalidateRows(args.rows);
+    grid.render();
+  });
+
+  // column sorting
+  var sortcol = column_keys[0];
+  var sortdir = 1;
+
+  function comparer(a, b) {
+    var x = a[sortcol], y = b[sortcol];
+    var standard_val=(x == y ? 0 : (x > y ? 1 : -1))
+    console.log(a);
+    if (a=="Yes"){ standard_val=false; console.log("suh")};
+    return standard_val;
+  }
+  
+  // click header to sort grid column
+  grid.onSort.subscribe(function (e, args) {
+    sortdir = args.sortAsc ? 1 : -1;
+    sortcol = args.sortCol.field;
+
+    if ($.browser.msie && $.browser.version <= 8) {
+      dataView.fastSort(sortcol, args.sortAsc);
+    } else {
+      dataView.sort(comparer, args.sortAsc);
+    }
+  });
+
+  // highlight row in chart
+  grid.onMouseEnter.subscribe(function(e,args) {
+    // Get row number from grid
+    var grid_row = grid.getCellFromEvent(e).row;
+
+    // Get the id of the item referenced in grid_row
+    var item_id = grid.getDataItem(grid_row).id;
+    var d = parcoords.brushed() || data;
+
+    // Get the element position of the id in the data object
+    elementPos = d.map(function(x) {return x.id; }).indexOf(item_id);
+
+    // Highlight that element in the parallel coordinates graph
+    parcoords.highlight([d[elementPos]]);
+  });
+
+  grid.onMouseLeave.subscribe(function(e,args) {
+    parcoords.unhighlight();
+  });
+
+  // fill grid with data
+  gridUpdate(data);
+
+  // update grid on brush
+  parcoords.on("brush", function(d) {
+    gridUpdate(d);
+  });
+
+  function gridUpdate(data) {
+    dataView.beginUpdate();
+    dataView.setItems(data);
+    dataView.endUpdate();
+  };
+
+});
+
+// update color
+function change_color(dimension) {
+  pcz.svg.selectAll(".dimension")
+    .style("font-weight", "normal")
+    .filter(function(d) { return d == dimension; })
+    .style("font-weight", "bold")
+
+  pcz.color(zcolor(pcz.data(),dimension)).render()
+}
+
+// return color function based on plot and dimension
+function zcolor(col, dimension) {
+  var z = zscore(_(col).pluck(dimension).map(parseFloat))
+  return function(d) { return zcolorscale(z(d[dimension])) }
+};
+
+// color by zscore
+function zscore(col) {
+  var n = col.length,
+      mean = _(col).mean(),
+      sigma = _(col).stdDeviation();
+  return function(d) {
+    return (d-mean)/sigma;
+  };
+};
+</script>
