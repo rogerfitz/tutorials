@@ -2,20 +2,20 @@
 <title>MLB Team Performance ASG Break</title>
 
 <!-- SlickGrid -->
-<link rel="stylesheet" href="lib/slickgrid/slick.grid.css" type="text/css"/>
-<link rel="stylesheet" href="lib/slickgrid/jquery-ui-1.8.16.custom.css" type="text/css"/>
-<link rel="stylesheet" href="lib/slickgrid/examples.css" type="text/css"/>
-<link rel="stylesheet" href="lib/slickgrid/slick.pager.css" type="text/css"/>
-<script src="lib/slickgrid/jquery-1.7.min.js"></script>
-<script src="lib/slickgrid/jquery.event.drag-2.0.min.js"></script>
-<script src="lib/slickgrid/slick.core.js"></script>
-<script src="lib/slickgrid/slick.grid.js"></script>
-<script src="lib/slickgrid/slick.pager.js"></script>
-<script src="lib/slickgrid/slick.dataview.js"></script>
+<link rel="stylesheet" href="static/slickgrid/slick.grid.css" type="text/css"/>
+<link rel="stylesheet" href="static/slickgrid/jquery-ui-1.8.16.custom.css" type="text/css"/>
+<link rel="stylesheet" href="static/slickgrid/examples.css" type="text/css"/>
+<link rel="stylesheet" href="static/slickgrid/slick.pager.css" type="text/css"/>
+<script src="static/slickgrid/jquery-1.7.min.js"></script>
+<script src="static/slickgrid/jquery.event.drag-2.0.min.js"></script>
+<script src="static/slickgrid/slick.core.js"></script>
+<script src="static/slickgrid/slick.grid.js"></script>
+<script src="static/slickgrid/slick.pager.js"></script>
+<script src="static/slickgrid/slick.dataview.js"></script>
 <!-- End SlickGrid -->
 
-<link rel="stylesheet" type="text/css" href="lib/d3.parcoords.css">
-<link rel="stylesheet" type="text/css" href="lib/style.css">
+<link rel="stylesheet" type="text/css" href="static/d3.parcoords.css">
+<link rel="stylesheet" type="text/css" href="static/style.css">
 <style>
 body, html {
   margin: 0;
@@ -41,11 +41,11 @@ body, html {
   color: #069;
 }
 </style>
-<script src="lib/d3.min.js"></script>
-<script src="lib/d3.parcoords.custom.js"></script><!-- some hacks to force the range on % fields-->
-<script src="lib/underscore.js"></script>
-<script src="lib/underscore.math.js"></script>
-<script src="lib/divgrid.js"></script>
+<script src="static/d3.min.js"></script>
+<script src="static/d3.parcoords.custom.js"></script><!-- some hacks to force the range on % fields-->
+<script src="static/underscore.js"></script>
+<script src="static/underscore.math.js"></script>
+<script src="static/divgrid.js"></script>
 <div id="header"><h1 style="text-align:center">MLB Team Performance with All Star Break</h1></div>
 <div id="example" class="parcoords" style="height:240px;"></div>
 <div id="grid"></div>
@@ -73,7 +73,7 @@ var zcolorscale = d3.scale.linear()
   .interpolate(d3.interpolateLab);
 
 // load csv file and create the chart
-d3.csv('data/paracoord_asg_vals.csv', function(data) {
+d3.csv('static/data/paracoord_asg_vals.csv', function(data) {
   // slickgrid needs each data element to have an id
   data.forEach(function(d,i) { d.id = d['SEASON']+d['original_team-id'] || i; });
 
