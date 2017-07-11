@@ -1,3 +1,3 @@
-![](Travel%20Times%20Interactive%20Visualization%20with%20Title.PNG?raw=true)  
-Install with `pip install -r req.txt`   
-http://www.ergosum.co/travel-times-interactive-version/
+### Flask Visualization Server  
+Dynamically add visualizations by checking each folder in tutorials for a server.py or index.html  
+IN PROGRESS
