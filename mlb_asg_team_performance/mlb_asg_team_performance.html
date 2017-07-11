@@ -83,7 +83,7 @@ d3.csv('static/data/paracoord_asg_vals.csv', function(data) {
     .hideAxis(['Historic Team ID', 'opp_ID','date','id','games_played','wins','losses'])
     .dimensions({
     "Team":{type: "string"},
-        "Season":{type: "number"},
+        "Season":{type: "number", ticks: 20},
         "Start Win%":{type: "number"},
         "Pre-ASG%":{type: "number"},
         "Post-ASG%":{type: "number"},
