@@ -16,6 +16,10 @@ app.logger.setLevel(logging.DEBUG)
 @app.route("/")
 def index():
     return render_template('index.html')
+
+@app.route("/mlb_asg_team_performance")
+def mlb_asg_team_performance():
+    return render_template('mlb_asg_team_performance.html')
     
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=5000)
