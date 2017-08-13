@@ -8,4 +8,4 @@ Examples:
   
 ### What Can We Do?
 The cool thing is that we should be able to turn off this "security" policy and create a new class web applications.  
-You can fix the spotify issue with [this chrome extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe/reviews). MORE COMING SOON and an example "cool" webapp utilizing iframes.
+You can fix the both issues with [this chrome extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe/reviews). MORE COMING SOON and an example "cool" webapp utilizing iframes.
