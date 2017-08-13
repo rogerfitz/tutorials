@@ -62,3 +62,5 @@ except:
 	full_contests=live_contests
 
 full_contests.to_csv(file_name)
+
+#run every sunday at 8PM CST
