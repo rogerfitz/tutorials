@@ -13,8 +13,9 @@ prefs = {"download.default_directory" : os.getcwd()+"/data"}
 chromeOptions.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome(chrome_options=chromeOptions)  # Optional argument, if not specified will search path.
 
-driver.get("https://www.amazon.com/ap/signin?_encoding=UTF8&openid.assoc_handle=usflex&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2Fdp%2FB00X4WHP5E%2Fref%3Dfs_ods_fs_ha_dr%3F_encoding%3DUTF8%26ref_%3Dnav_ya_signin")
-
+PRODUCT_PAGE="https://www.amazon.com/Amazon-Echo-Dot-Portable-Bluetooth-Speaker-with-Alexa-Black/dp/B01DFKC2SO/"
+driver.get(PRODUCT_PAGE)
+driver.find_element_by_id("nav-link-accountList").click()
 def randomSleep(scale_factor=1):
 	sleep_dur=.1*scale_factor*random.randint(1,3)
 	print("Sleeping for:", sleep_dur, flush=True)#flush needed to make sure output gets written in timely matter
