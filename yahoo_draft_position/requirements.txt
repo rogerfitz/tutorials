@@ -164,7 +164,7 @@ tornado==4.5.1
 traitlets==4.3.2
 unicodecsv==0.14.1
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.24.2
 wcwidth==0.1.7
 Werkzeug==0.12.2
 widgetsnbextension==2.0.0
