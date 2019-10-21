@@ -72,7 +72,7 @@ Markdown==2.6.8
 MarkupSafe==0.23
 matplotlib==2.0.2
 menuinst==1.4.7
-mistune==0.7.4
+mistune==0.8.1
 mpmath==0.19
 msgpack-python==0.4.8
 multipledispatch==0.4.9
