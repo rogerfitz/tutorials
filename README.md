@@ -1,5 +1,5 @@
 # tutorials
-
+Updates coming soon
 ### Setup
 Install anaconda python distribution version 3 and run:  
 `pip install BeautifulSoup lxml`  
