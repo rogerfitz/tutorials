@@ -1,0 +1,1 @@
+Proper blogpost coming, for now watch the video. Write up on pdf parsing and basics of text comparisons with plenty of ramblings

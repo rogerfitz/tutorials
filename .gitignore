@@ -100,3 +100,4 @@ page_cache/
 
 # mypy
 .mypy_cache/
+/planned_tutorials/
