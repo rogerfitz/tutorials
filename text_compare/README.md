@@ -1,1 +1,2 @@
-Proper blogpost coming, for now watch the video. Write up on pdf parsing and basics of text comparisons with plenty of ramblings
+Watch the accompanying video https://www.youtube.com/watch?v=fAyNg5JAl5k  
+Read the Blog Post https://www.ergosum.co/pdf-parsing-in-python-a-quickstart-to-comparing-2-documents/
