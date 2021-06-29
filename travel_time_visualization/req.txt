@@ -5,11 +5,8 @@ Flask==0.12.2
 idna==2.5
 itsdangerous==0.24
 Jinja2==2.9.6
-MarkupSafe==0.23
-numpy==1.13.0
-pandas==0.20.2
-python-dateutil==2.6.0
-pytz==2017.2
+MarkupSafe
+pandas==1.2.5
 requests==2.18.1
 six==1.10.0
 urllib3==1.21.1
