@@ -25,7 +25,7 @@ jupyter notebook
 ```
 
 ## Modules
-1. [Project setup and API Basics](https://github.com/rogerfitz/tutorials/subreddit_analyzer/0_Setup.ipynb)
+1. [Project setup and API Basics](https://github.com/rogerfitz/tutorials/subreddit_analysis/0_Setup.ipynb)
 1. Top Links over period [store links with depth and upvotes], say you're interested in knowing what sites are biggest in the learn python community
 1. Finding the Top Keywords [basics of gensim or nltk]
 1. Analyze the interests of people who comment on a post [pedalboard /r/python]
