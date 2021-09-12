@@ -12,7 +12,7 @@ backports.weakref==1.0rc1
 beautifulsoup4==4.6.0
 bitarray==0.8.1
 blaze==0.10.1
-bleach==1.5.0
+bleach==3.3.0
 bokeh==0.12.5
 boto==2.46.1
 Bottleneck==1.2.1
@@ -25,7 +25,7 @@ colorama==0.3.9
 comtypes==1.1.2
 conda==4.3.24
 contextlib2==0.5.5
-cryptography==1.8.1
+cryptography==3.3.2
 cycler==0.10.0
 Cython==0.25.2
 cytoolz==0.8.2
@@ -38,7 +38,7 @@ entrypoints==0.2.2
 et-xmlfile==1.0.1
 fastcache==1.0.2
 Flask==0.12.2
-Flask-Cors==3.0.2
+Flask-Cors==3.0.9
 fp-growth==0.1.3
 gevent==1.2.1
 google-api-python-client==1.6.2
@@ -46,7 +46,7 @@ greenlet==0.4.12
 h5py==2.7.0
 HeapDict==1.0.0
 html5lib==0.9999999
-httplib2==0.10.3
+httplib2==0.19.0
 idna==2.5
 imagesize==0.7.1
 ipykernel==4.6.1
@@ -57,7 +57,7 @@ isort==4.2.5
 itsdangerous==0.24
 jdcal==1.3
 jedi==0.10.2
-Jinja2==2.9.6
+Jinja2==2.11.3
 jsonschema==2.6.0
 jupyter==1.0.0
 jupyter-client==5.0.1
@@ -67,7 +67,7 @@ Keras==2.0.6
 lazy-object-proxy==1.2.2
 llvmlite==0.18.0
 locket==0.2.0
-lxml==3.7.3
+lxml==4.6.3
 Markdown==2.6.8
 MarkupSafe==0.23
 matplotlib==2.0.2
@@ -83,7 +83,7 @@ nbformat==4.3.0
 networkx==1.11
 nltk==3.2.3
 nose==1.3.7
-notebook==5.0.0
+notebook==6.1.5
 numba==0.33.0
 numexpr==2.6.2
 numpy==1.12.1
@@ -102,12 +102,12 @@ pathlib2==2.2.1
 patsy==0.4.1
 pep8==1.7.0
 pickleshare==0.7.4
-Pillow==4.1.1
+Pillow==8.2.0
 ply==3.10
 prompt-toolkit==1.0.14
 protobuf==3.2.0
-psutil==5.2.2
-py==1.4.33
+psutil==5.6.6
+py==1.10.0
 pyaml==17.8.0
 pyasn1==0.3.2
 pyasn1-modules==0.0.11
@@ -116,7 +116,7 @@ pycparser==2.17
 pycrypto==2.6.1
 pycurl==7.43.0
 pyflakes==1.5.0
-Pygments==2.2.0
+Pygments==2.7.4
 pylint==1.6.4
 PyMySQL==0.7.9
 pyodbc==4.0.16
@@ -127,7 +127,7 @@ python-dateutil==2.6.0
 pytz==2017.2
 PyWavelets==0.5.2
 pywin32==220
-PyYAML==3.12
+PyYAML==5.4
 pyzmq==16.0.2
 QtAwesome==0.4.4
 qtconsole==4.3.0
@@ -137,7 +137,7 @@ reportlab==3.4.0
 requests==2.14.2
 requests-oauthlib==0.8.0
 rope-py3k==0.9.4.post1
-rsa==3.4.2
+rsa==4.7
 scikit-image==0.13.0
 scikit-learn==0.18.1
 scipy==0.19.0
@@ -156,7 +156,7 @@ statsmodels==0.8.0
 sympy==1.0
 tables==3.2.2
 tblib==1.3.2
-tensorflow==1.2.1
+tensorflow==2.5.0
 testpath==0.3
 Theano==0.9.0
 toolz==0.8.2
@@ -164,7 +164,7 @@ tornado==4.5.1
 traitlets==4.3.2
 unicodecsv==0.14.1
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.26.5
 wcwidth==0.1.7
 Werkzeug==0.12.2
 widgetsnbextension==2.0.0
