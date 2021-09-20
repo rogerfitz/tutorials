@@ -1,5 +1,5 @@
 # Overview
-[IN PROGRESS NOT DONE YET! TUTORIAL 0 is FINISHED]  
+[IN PROGRESS NOT DONE YET! TUTORIAL 0, and 1 is FINISHED]  
 Here are a few tutorials meant to get you started quickly with using the reddit API. It's meant to take no more than a weekend to go through and provide you with the building blocks you need to do your own projects using Reddit.
 ## Install Steps
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
@@ -14,7 +14,7 @@ From the tutorials directory
 ```
 git pull origin master
 cd subreddit_analyzer
-conda create -n subreddit_analysis python=3.9 pandas=1.3.2 jupyter=1.0.0 -y
+conda create -n subreddit_analysis python=3.9 pandas=1.3.2 jupyter=1.0.0 matplotlib=3.4.2 -y
 conda activate subreddit_analysis
 pip install -r requirements.txt
 ```
@@ -26,8 +26,8 @@ jupyter notebook
 
 ## Modules
 1. [Project setup and API Basics](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/0_Setup.ipynb)
-1. Top Links over period [store links with depth and upvotes], say you're interested in knowing what sites are biggest in the learn python community
-1. Finding the Top Keywords [basics of gensim or nltk]
+1. Top Links over period [part 1](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/1_Top_Links.ipynb) [part 2](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/2_Top_Links_with_Basic_Cleaning.ipynb)
+   - Say you're interested in knowing what sites are biggest in the /r/learnpython community
 1. Analyze the interests of people who comment on a post [pedalboard /r/python]
 1. Further work [website, Reddit bot, argument detection, proper NSFW categorizer that lets you filter out porn but keep the rest]
 
