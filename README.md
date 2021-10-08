@@ -91,4 +91,4 @@ Windows:
   ```
 7. Install github command line if you don't have it already, in Mac terminal `brew install git`
 7. Now choose where you want to run the projects. Use `cd` commands and you can download the repository by doing `git clone https://github.com/rogerfitz/tutorials` 
-7. Nearly done now, `cd` into the directory and test that a tutorial works. I'd recommend starting with [subreddit_analysis/README.md](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/README.md)
+7. Nearly done now, `cd` into the directory and test that a tutorial works. New to python? I'd recommend starting with [intro_to_jupyter](https://github.com/rogerfitz/tutorials/blob/master/_introduction_to_jupyter_notebooks/README.md) otherwise go with [subreddit_analysis](https://github.com/rogerfitz/tutorials/tree/master/subreddit_analysis)

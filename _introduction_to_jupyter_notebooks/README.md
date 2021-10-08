@@ -1,8 +1,8 @@
 # Overview
 [CODE DONE, VIDEO COMING SOON!]  
 ## Install Steps
-If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
-Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)
+If this is your first tutorial you've used please start with the base [README.md](https://github.com/rogerfitz/tutorials/blob/master/README.md) file. Then proceed with the install steps below
+
 ```
 git clone https://github.com/rogerfitz/tutorials
 cd tutorials
