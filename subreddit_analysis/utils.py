@@ -54,18 +54,18 @@ def get_domains(post):
             all_domains[k]+=v
     return all_domains
 
-def analyze_subreddit(subreddit_name):
+def analyze_subreddit(subreddit_name, limit=10):
     subreddit=reddit.subreddit(subreddit_name)
 
     all_domains=defaultdict(int)
     #Can change window size(s) to compare top links over tiem
-    for post in subreddit.top("week",limit=10):
+    for post in subreddit.top("all",limit=limit):#1000
         domains=get_domains(post)
         for k,v in domains.items():
             all_domains[k]+=v
     all_domains=dict(sorted(all_domains.items(), key=lambda x:-x[1]))
     return {"domains": all_domains}
 
-def analyze_user(user_name):
+def analyze_user(user_name, limit=10):
     #Not implemented yet
     return None
