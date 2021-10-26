@@ -67,5 +67,4 @@ def analyze_subreddit(subreddit_name, limit=10):
     return {"domains": all_domains}
 
 def analyze_user(user_name, limit=10):
-    #Not implemented yet
-    return None
+    raise NotImplementedError
