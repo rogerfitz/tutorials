@@ -1,6 +1,7 @@
 # Overview
-[IN PROGRESS NOT DONE YET! TUTORIAL 0, and 1 is FINISHED]  
-Here are a few tutorials meant to get you started quickly with using the reddit API. It's meant to take no more than a weekend to go through and provide you with the building blocks you need to do your own projects using Reddit.
+[TUTORIAL 3 still in progress!]
+Here are a few tutorials meant to get you started quickly with using the reddit API. It's meant to take no more than a weekend to go through and provide you with the building blocks you need to do your own projects using Reddit.  
+NOTE: Reddit has a limit of 1000 values per requests. These tutorials use the Reddit API. If you want to access more data use pushshift, they store a copy of reddit and give you much more history https://www.reddit.com/r/pushshift/comments/bcxguf/new_to_pushshift_read_this_faq/
 ## Install Steps
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
 Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)

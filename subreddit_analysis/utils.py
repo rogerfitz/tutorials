@@ -11,7 +11,7 @@ def extract_link_information(text):
     #In general make functions as reusable as makes sense
     root_domains=defaultdict(int)
     if text:
-        urls=re.findall(r'(https?://[^\s]+)', text)
+        urls=re.findall(r'(https?://[^\s\)\]]+)', text)#starts with https and not strip out )] in case markdown
         for url in urls:
             parsed_url=urlparse(url)
             root_domains[parsed_url.netloc]+=1
@@ -65,3 +65,7 @@ def analyze_subreddit(subreddit_name):
             all_domains[k]+=v
     all_domains=dict(sorted(all_domains.items(), key=lambda x:-x[1]))
     return {"domains": all_domains}
+
+def analyze_user(user_name):
+    #Not implemented yet
+    return None
