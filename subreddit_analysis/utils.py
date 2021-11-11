@@ -54,7 +54,7 @@ def get_domains(post):
             all_domains[k]+=v
     return all_domains
 
-def analyze_subreddit(subreddit_name, limit=10):
+def analyze_subreddit(subreddit_name, how="all",limit=10):
     subreddit=reddit.subreddit(subreddit_name)
 
     all_domains=defaultdict(int)
