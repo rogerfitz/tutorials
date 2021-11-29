@@ -1,3 +1,4 @@
 praw==7.4.0
 tqdm==4.62.2
 psaw==0.1.0
+seaborn==0.11.2
