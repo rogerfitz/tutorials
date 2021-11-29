@@ -133,7 +133,7 @@ QtAwesome==0.4.4
 qtconsole==4.3.0
 QtPy==1.2.1
 rauth==0.7.3
-reportlab==3.4.0
+reportlab==3.5.55
 requests==2.14.2
 requests-oauthlib==0.8.0
 rope-py3k==0.9.4.post1
