@@ -14,8 +14,8 @@ From the tutorials directory
 git pull origin master
 cd scraping_insider_trading
 conda create -n scraping_insider_trading python=3.9 pandas=1.3.2 jupyter=1.0.0 matplotlib=3.4.2 -y
-pip install -r requirements.txt
 conda activate scraping_insider_trading
+pip install -r requirements.txt
 ```
 
 ## Running the Code
