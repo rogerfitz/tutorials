@@ -31,9 +31,13 @@ jupyter notebook
 1. [Project setup and API Basics](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/0_Setup.ipynb)
 1. Top Links over period [part 1](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/1_Top_Links.ipynb) [part 2](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/2_Top_Links_with_Basic_Cleaning.ipynb)
    - Say you're interested in knowing what sites are biggest in the /r/learnpython community
-1. Analyze the interests of people who comment on a post [pedalboard /r/python]
-   - 
-1. Further work [website, Reddit bot, argument detection, proper NSFW categorizer that lets you filter out porn but keep the rest]
+1. Analyze the interests of people who comment on a post
+   - [part 1](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/3.1_Analyzing_Reddit_Interests.ipynb)
+   - [part 2](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/3.2_Analyzing_Reddit_Interests-Austin-vs-Bay-Area-vs-NYC-Data.ipynb)
+1. [How to Use the Reddit API with Pushshift to Bypass API Limits](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/4_Bulk_Data_Extraction_with_Pushshift.ipynb)
+
+## Further work ideas
+[website, Reddit bot, argument detection, proper NSFW categorizer that lets you filter out porn but keep the rest]
 
 ## Other
 Feedback welcome!  
