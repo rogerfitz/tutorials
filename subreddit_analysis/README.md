@@ -1,7 +1,9 @@
 # Overview
-[TUTORIAL 3 still in progress!]
+- [Youtube Series for these Notebooks](https://www.youtube.com/playlist?list=PLyaUV-CbtEoUZfv7eqZ9Fa_cBZPpWqWJR)  
+- [Blogpost on Using Pushshift](https://www.ergosum.co/how-to-use-the-reddit-api-with-pushshift-to-bypass-api-limits/)  
+
 Here are a few tutorials meant to get you started quickly with using the reddit API. It's meant to take no more than a weekend to go through and provide you with the building blocks you need to do your own projects using Reddit.  
-NOTE: Reddit has a limit of 1000 values per request. These tutorials use the Reddit API. If you want to access more data use pushshift, they store a copy of reddit and give you much more history https://www.reddit.com/r/pushshift/comments/bcxguf/new_to_pushshift_read_this_faq/
+NOTE: Reddit has a limit of 1000 values per request. See the Pushshift Notebook on how to get around that.
 ## Install Steps
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
 Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)
