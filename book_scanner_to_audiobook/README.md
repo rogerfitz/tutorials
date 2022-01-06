@@ -1,5 +1,5 @@
 # Overview
-[VERY MUCH IN PROGRESS NOT DONE YET!]   All I have so far is the snippet video
+[Nearly done] Still need to do the audio portion and then touch up all the comments/rerun things
 ## Install Steps
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
 Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)
