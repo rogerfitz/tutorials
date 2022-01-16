@@ -1,6 +1,7 @@
+###[Notebooks Done]! Feel free to get started using this. It "should" work. I'm working on creating some videos now.
 # Overview
-#### [Nearly done] Still need to do the audio portion and then touch up all the comments/rerun things  
-Takes a video of page turning, identifies pages, does OCR, and generates an audio file.   
+Takes a video of page turning, identifies pages, does OCR, and generates an audio file.    
+It should be realitvely easy to create your own page turning video. Just notice how in my video I keep the camera still and avoided having too many shadows in the video
 ## Install Steps
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
 Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)

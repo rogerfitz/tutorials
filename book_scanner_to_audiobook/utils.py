@@ -10,3 +10,5 @@ def draw_frame(frame, figsize=(20,20)):
     else:
         plt.imshow(frame, interpolation="nearest")
     plt.show()
+
+

@@ -10,6 +10,7 @@ dependencies:
   - matplotlib=3.4.2
   - opencv=4.5.3
   - scipy=1.7.1
+  - librosa=0.8.1
   - pip:
     - requests==2.26
     - beautifulsoup4==4.10.0
