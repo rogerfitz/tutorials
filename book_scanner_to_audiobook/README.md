@@ -1,5 +1,5 @@
-###[Notebooks Done]! Feel free to get started using this. It "should" work. I'm working on creating some videos now.
 # Overview
+[Blog post](https://www.ergosum.co/create-audio-books-from-your-bookshelf-using-python/) - [Youtube Playlist](https://www.youtube.com/watch?v=TQKEtC2y7R8&list=PLyaUV-CbtEoWcLb_lWHtfbDYO7pcXHnq9)  
 Takes a video of page turning, identifies pages, does OCR, and generates an audio file.    
 It should be realitvely easy to create your own page turning video. Just notice how in my video I keep the camera still and avoided having too many shadows in the video
 ## Install Steps
