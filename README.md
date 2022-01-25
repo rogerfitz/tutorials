@@ -52,8 +52,7 @@ Windows:
 7. Now choose where you want to run the projects. Use `cd` commands and you can download the repository by doing `git clone https://github.com/rogerfitz/tutorials` 
 7. Nearly done now, `cd` into the directory and test that a tutorial works. I'd recommend starting with [subreddit_analysis/README.md](https://github.com/rogerfitz/tutorials/blob/master/subreddit_analysis/README.md)
 
-### Mac
-Windows:  
+### Mac  
 1. Download [Minconda](https://docs.conda.io/en/latest/miniconda.html) -- Select Latest Mac 64 bit
 1. Install and select the option to add Minconda to your system path (it isn't default)
 1. Open the Mac Terminal and test that conda was installed```  conda info  ```
