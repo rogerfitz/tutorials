@@ -1,6 +1,6 @@
 # March Madness Predictions Using the Crowd
 
-In this tutorial I'll go through how to scrape sports betting futures 
+In this tutorial I go through how to scrape sports betting futures 
 to create a pretty decent march madness bracket. You can use this sort of approach with
 lots of other sports too!
 #### Outline
