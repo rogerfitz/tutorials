@@ -1,13 +1,11 @@
-# [IN PROGRESS]HOPING TO KNOCK OUT BY end of day 3/16/2022
 # March Madness Predictions Using the Crowd
 
 In this tutorial I'll go through how to scrape sports betting futures 
 to create a pretty decent march madness bracket. You can use this sort of approach with
 lots of other sports too!
 #### Outline
-1. Intro
-2. Scraping Futures Using Beautiful Soup
-3. Implied Odds and Power Rankings
+1. Scraping Futures Using Beautiful Soup
+3. Matching up with Kaggle Data
 4. Generating a bracket
 ## Install
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
@@ -23,6 +21,8 @@ From the tutorials directory
 git pull origin master
 cd march_madness_using_futures
 conda env create -f environment.yaml
+pip install binarytree==6.4.0
+pip install bracketeer==0.2.0
 ```
 
 ## Running the Code
