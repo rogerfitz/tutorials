@@ -1,0 +1,9 @@
+name: eth_dev_intro
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - jupyter=1.0.0
+  - web3[tester]=5.28.0
