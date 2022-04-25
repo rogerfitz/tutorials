@@ -1,6 +1,6 @@
 # Overview
-Tutorial 0 done, should add a few more by end of April or so  
-[Youtube Video](https://youtu.be/iEaU__JdI7c)
+- [Chess Basics](https://youtu.be/iEaU__JdI7c)
+- [Blunder Detection and Using a PGN Database](https://youtu.be/u2-ydOlWZU4)
 ## Install Steps
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
 Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)
