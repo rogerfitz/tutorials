@@ -14,7 +14,7 @@ From the tutorials directory
 ```
 git pull origin master
 cd python_chess
-conda create -n python_chess python=3.9 pandas=1.3.4 jupyter=1.0.0 matplotlib=3.4 -y
+conda create -n python_chess python=3.9 pandas=1.3.4 jupyter=1.0.0 matplotlib=3.4 scipy=1.7.3 -y
 conda activate python_chess
 pip install -r requirements.txt
 ```
