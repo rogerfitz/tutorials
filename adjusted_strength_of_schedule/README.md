@@ -1,8 +1,7 @@
 # Adjusted Strength of Schedule for the NFL
-[IN PROGRESS!!]
+[Almost done, still need to interpret results better]
 Strength of schedule is a fundamentally flawed metric. Losing to a team shouldn't give you an easier strength of schedule. 
-Let's remove those from the calculation and see if this produces better results
-#### Outline
+Let's remove those from the calculation and see if this produces better results.  
 
 ## Install
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  

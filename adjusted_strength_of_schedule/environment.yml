@@ -9,5 +9,8 @@ dependencies:
   - jupyter=1.0.0
   - matplotlib=3.5.2
   - altair=4.1.0
+  - scikit-learn=1.0.2
+  - statsmodels=0.13.2
   - pip:
     - tqdm==4.64
+    - vega_datasets==0.9.0
