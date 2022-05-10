@@ -1,0 +1,31 @@
+R2,cols,predicting
+0.8821566542303003,"['sos_elo_scaled', 'prior_season_elo']",win_pts_rate
+0.880995629582252,"['sos_pts_difficulty_weighted', 'prior_season_elo']",win_pts_rate
+0.8799017731146018,"['sos_pts_difficulty_weighted_adj', 'prior_season_elo']",win_pts_rate
+0.8795718818130942,"['sos_pts', 'prior_season_elo']",win_pts_rate
+0.8745874899257466,"['end_of_season_elo_scaled', 'prior_season_elo']",win_pts_rate
+0.8745874899257466,['end_of_season_elo_scaled'],win_pts_rate
+0.38467745550804144,"['sos_pts', 'prior_season_elo']",sos_adj
+0.3820216855199392,"['sos_pts_difficulty_weighted_adj', 'prior_season_elo']",sos_adj
+0.38166199463875816,"['sos_elo_scaled', 'prior_season_elo']",sos_adj
+0.3794835685843616,"['sos_pts_difficulty_weighted', 'prior_season_elo']",sos_adj
+0.33151063245181434,"['end_of_season_elo_scaled', 'prior_season_elo']",sos_adj
+0.3315106324518142,['end_of_season_elo_scaled'],sos_adj
+0.178627621149144,"['sos_elo_scaled', 'prior_season_elo']",sos
+0.17221927750142751,"['sos_pts', 'prior_season_elo']",sos
+0.17056280963761739,"['sos_pts_difficulty_weighted', 'prior_season_elo']",sos
+0.16968424235518498,"['sos_pts_difficulty_weighted_adj', 'prior_season_elo']",sos
+0.1319316034391821,['sos_elo_scaled'],sos
+0.12580926644451063,['sos_pts'],sos
+0.12335005657823117,['sos_pts_difficulty_weighted_adj'],sos
+0.1228487727739338,['sos_pts_difficulty_weighted'],sos
+0.0833325378347548,['sos_pts'],sos_adj
+0.08017049140143195,['sos_pts_difficulty_weighted_adj'],sos_adj
+0.07965530566475976,['sos_pts_difficulty_weighted'],sos_adj
+0.0793888651099014,['sos_elo_scaled'],sos_adj
+0.031591168983591045,"['end_of_season_elo_scaled', 'prior_season_elo']",sos
+0.031591168983591045,['end_of_season_elo_scaled'],sos
+0.0006826972927499453,['sos_pts'],win_pts_rate
+0.000643196096011156,['sos_pts_difficulty_weighted'],win_pts_rate
+0.0005907665322328892,['sos_pts_difficulty_weighted_adj'],win_pts_rate
+8.607781716662988e-05,['sos_elo_scaled'],win_pts_rate

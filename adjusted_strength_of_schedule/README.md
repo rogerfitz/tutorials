@@ -1,5 +1,6 @@
 # Adjusted Strength of Schedule for the NFL
-[Almost done, still need to interpret results better]
+[Almost done, still need to interpret results better] It appears the results aren't very significant in predicting next years performance for the new metric but it is far more predictable ahead of time
+  
 Strength of schedule is a fundamentally flawed metric. Losing to a team shouldn't give you an easier strength of schedule. 
 Let's remove those from the calculation and see if this produces better results.  
 
