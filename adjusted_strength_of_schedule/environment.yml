@@ -1,0 +1,13 @@
+name: adjusted_strength_of_schedule
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - pandas=1.4.2
+  - jupyter=1.0.0
+  - matplotlib=3.5.2
+  - altair=4.1.0
+  - pip:
+    - tqdm==4.64
