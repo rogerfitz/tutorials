@@ -1,5 +1,8 @@
 # Menu Scraping at Scale
-Very much in progress. Will cover PDF, web scraping, and how to orchestrate a spider to scrape unseen websites
+First video done.
+1. How to Scrape a PDF Menu - [Youtube](https://youtu.be/VP7mrps2u_8) 
+
+Will cover PDF, web scraping, and how to orchestrate a spider to scrape unseen websites
 #### Outline
 
 ## Install
