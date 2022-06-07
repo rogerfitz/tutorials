@@ -18,5 +18,7 @@ dependencies:
     - boto3==1.20.28
     - amazon-textract-response-parser==0.1.23
     - azure-cognitiveservices-vision-computervision==0.9.0
+    - azure-cognitiveservices-speech==1.19.0
+    - amazon-textract-response-parser==0.1.23
     - editdistance==0.6.0
     - jiwer==2.3.0
