@@ -9,6 +9,7 @@ dependencies:
   - jupyter=1.0.0
   - matplotlib=3.4.2
   - altair=4.2.0
+  - scipy=1.7.3
   - pip:
     - requests==2.27.1
     - beautifulsoup4==4.11.1
