@@ -1,6 +1,6 @@
 # Using Prediction Markets to Budget and Hedge for Your Roadtrip
 
-1. Intro: Overview, Connecting to Kalshi and using Kalshi to Estimate Gas Prices
+1. [Video](https://youtu.be/ZsUi_HAwJzg) Intro: Overview, Connecting to Kalshi and using Kalshi to Estimate Gas Prices
 2. COMING SOON -- Hedging your Roadtrip using Kalshi
 
 #### Outline
