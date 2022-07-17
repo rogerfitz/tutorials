@@ -1,8 +1,6 @@
 # Using AI to Create Logos
-[Explainer Youtube Video](https://youtu.be/KhmOJzCmu1o)
-1. 0_Generating_and_Postprocessing_the_Logo
-
-#### Outline
+[Explainer Youtube Video](https://youtu.be/KhmOJzCmu1o) - Learn how to make a logo using AI, postprocess in Python or GIMP, and make your own T-Shirt!
+-  0_Generating_and_Postprocessing_the_Logo
 
 ## Install
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
