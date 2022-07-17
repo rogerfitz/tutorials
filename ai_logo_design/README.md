@@ -1,8 +1,6 @@
 # Using AI to Create Logos
-
-1. Generating the Image
-2. Reducing the color space
-3. Upsampling to increase resolution
+[Explainer Youtube Video](https://youtu.be/KhmOJzCmu1o)
+1. 0_Generating_and_Postprocessing_the_Logo
 
 #### Outline
 
