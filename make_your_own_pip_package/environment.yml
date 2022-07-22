@@ -1,0 +1,11 @@
+name: make_your_own_pip_package
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - numpy=1.22.3
+  - pillow=9.2.0
+  - pip:
+    - icon-font-to-png==0.4.1
