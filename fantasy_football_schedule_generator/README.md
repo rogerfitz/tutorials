@@ -1,6 +1,6 @@
 # Generating Fantasy Football Schedules for your Divisional League
 
-[Video](#)
+[Video that uses this](https://www.youtube.com/watch?v=KBxQa6dycto)
 
 #### Outline
 
