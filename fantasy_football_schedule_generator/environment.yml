@@ -1,0 +1,9 @@
+name: fantasy_football_schedule_generator
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip
+  - pandas=1.3.2
+  - jupyter=1.0.0
