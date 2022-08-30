@@ -2,6 +2,9 @@
 
 [Video that uses this](https://www.youtube.com/watch?v=KBxQa6dycto)
 
+# IMPORTANT NOTE
+You must have an even number of teams in your divisions and conferences for this approach to work
+
 #### Outline
 
 I'm a co-commissioner in a fantasy football league. Yahoo doesn't do a good job creating a simple divisional schedule
