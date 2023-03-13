@@ -1,12 +1,8 @@
-# March Madness Predictions Using the Crowd
-In this tutorial I'll go through how to scrape sports betting futures 
-to create a pretty decent march madness bracket. You can use this sort of approach with
-lots of other sports too!
+# Analyzing Sports Betting
+In this folder I analyze casino win percents from publically available data and attempt to interpret why. 
+[Youtube video](https://www.youtube.com/watch?v=ABdukCadhs4) 
 #### Outline
 1. Intro
-2. Scraping Futures Using Beautiful Soup
-3. Implied Odds
-4. Generating a bracket
 ## Install
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
 Install miniconda https://docs.conda.io/en/latest/miniconda.html (choose latest python version under your OS. Likely 64 bit)
@@ -19,7 +15,7 @@ The exact python version doesn't matter because with each project I'll have you 
 From the tutorials directory
 ```
 git pull origin master
-cd march_madness
+cd analyzing_sports_betting
 conda env create -f environment.yml
 ```
 
@@ -27,6 +23,6 @@ conda env create -f environment.yml
 From the tutorials directory
 ```
 cd march_madness
-conda activate march_madness
+conda activate analyzing_sports_betting
 jupyter notebook
 ```
