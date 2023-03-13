@@ -1,0 +1,15 @@
+name: analyzing_sports_betting
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pandas=1.5.3
+  - jupyter=1.0.0
+  - matplotlib=3.7.0
+  - pip:
+    - tqdm==4.62.3
+    - altair==5.0.0rc1
+    - requests==2.28.2
+    - beautifulsoup4==4.11.2
