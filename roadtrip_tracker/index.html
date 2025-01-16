@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Animation on Highway</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 85vh;
+        }
+        .controls, .info {
+            text-align: center;
+            margin: 10px;
+        }
+        .info {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="city1">Starting City:</label>
+        <input type="text" id="city1" value="Miami, OK">
+        <label for="city2">Destination City:</label>
+        <input type="text" id="city2" value="Oak Lawn, Illinois">
+        <label for="time">Driving Time (hours):</label>
+        <input type="number" id="time" value="9" min="1">
+        <label for="departure">Departure Time:</label>
+        <input type="datetime-local" id="departure" value="2025-01-16T07:30">
+        <button id="startButton">Start</button>
+    </div>
+    <div class="info">
+        <span id="currentLocation">Current Location: N/A</span> |
+        <span id="nextCity">Next Major City: N/A</span> |
+        <span id="timeRemaining">Time Remaining: N/A</span>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([35, -105], 7); // Initial view
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        let carMarker;
+        let currentLocationElement = document.getElementById('currentLocation');
+        let nextCityElement = document.getElementById('nextCity');
+        let timeRemainingElement = document.getElementById('timeRemaining');
+        const startButton = document.getElementById('startButton');
+
+        const MAJOR_CITY_POPULATION = 80000;
+        let majorCitiesAlongRoute = [];
+
+        async function geocode(city) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json`;
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data && data[0]) {
+                return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+            } else {
+                alert(`Could not find the location for: ${city}`);
+                throw new Error(`Location not found: ${city}`);
+            }
+        }
+
+        async function reverseGeocode(coords) {
+            const url = `https://nominatim.openstreetmap.org/reverse?lat=${coords[0]}&lon=${coords[1]}&format=json`;
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data && data.address) {
+                const { city, county, state } = data.address;
+                return `${city || county || 'Unknown'}, ${state || 'Unknown'}`;
+            } else {
+                return 'Unknown Location';
+            }
+        }
+
+        async function fetchMajorCitiesAlongRoute(route) {
+            const cities = [];
+            /*for (let i = 0; i < route.length; i += Math.max(1, Math.floor(route.length / 60))) { // Sample once per minute
+                const location = await reverseGeocode(route[i]);
+                if (location.includes(',')) {
+                    const [city, state] = location.split(', ');
+                    if (city && !cities.find(c => c.city === city)) {
+                        const population = await fetchCityPopulation(city, state);
+                        if (population > MAJOR_CITY_POPULATION) {
+                            cities.push({ city, state, coords: route[i] });
+                        }
+                    }
+                }
+            }*/
+            return cities;
+        }
+
+        async function fetchCityPopulation(city, state) {
+            // Simulate population fetch (replace this with a real API if available)
+            const mockData = {
+                'Moriarty': 2000,
+                'Vinita': 5700,
+                'Amarillo': 200000,
+                'Oklahoma City': 649021,
+                'Tulsa': 413066
+            };
+            return mockData[city] || 0;
+        }
+
+        async function fetchRoute(start, end) {
+            const url = `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`;
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data.routes && data.routes.length > 0) {
+                return data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+            } else {
+                alert('Could not fetch the route');
+                throw new Error('Route not found');
+            }
+        }
+
+        startButton.addEventListener('click', async () => {
+            const city1 = document.getElementById('city1').value;
+            const city2 = document.getElementById('city2').value;
+            const hours = parseFloat(document.getElementById('time').value);
+            const departureTime = new Date(document.getElementById('departure').value);
+            const currentTime = new Date();
+
+            if (departureTime > currentTime) {
+                alert("Departure time cannot be in the future.");
+                return;
+            }
+
+            const timeElapsed = (currentTime - departureTime) / 3600000; // hours elapsed
+
+            try {
+                const startCoords = await geocode(city1);
+                const endCoords = await geocode(city2);
+
+                const route = await fetchRoute(startCoords, endCoords);
+				console.log("Got route")
+                majorCitiesAlongRoute = await fetchMajorCitiesAlongRoute(route);
+
+                const line = L.polyline(route, { color: 'blue' }).addTo(map);
+                map.fitBounds(line.getBounds());
+
+                if (carMarker) {
+                    map.removeLayer(carMarker);
+                }
+
+                carMarker = L.marker(route[0], {
+                    icon: L.divIcon({
+                        className: 'car-marker',
+                        html: '🚗',
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15]
+                    })
+                }).addTo(map);
+
+                const totalDistance = route.reduce((acc, curr, idx, arr) => {
+                    if (idx === 0) return acc;
+                    return acc + map.distance(arr[idx - 1], curr);
+                }, 0); // in meters
+                const speed = totalDistance / (hours * 3600); // meters per second
+
+                let stepIndex = Math.min(Math.floor((timeElapsed / hours) * route.length), route.length - 1);
+				console.log(stepIndex)
+
+                const interval = 50; // Update every 50 ms
+                const moveCar = async () => {
+                    if (stepIndex >= route.length - 1) {
+                        clearInterval(timer);
+                        timeRemainingElement.textContent = 'Time Remaining: 0:00';
+                        nextCityElement.textContent = 'Next Major City: Destination Reached';
+                        currentLocationElement.textContent = 'Current Location: Destination Reached';
+                        return;
+                    }
+
+                    const distance = map.distance(route[stepIndex], route[stepIndex + 1]);
+                    const duration = (distance / speed) * 1000; // in ms
+
+                    const latDiff = route[stepIndex + 1][0] - route[stepIndex][0];
+                    const lonDiff = route[stepIndex + 1][1] - route[stepIndex][1];
+
+                    const stepDuration = interval / duration;
+                    let stepProgress = 0;
+
+                    const stepTimer = setInterval(async () => {
+                        if (stepProgress >= 1) {
+                            clearInterval(stepTimer);
+                            stepIndex++;
+                            moveCar();
+                        } else {
+                            stepProgress += stepDuration;
+                            const newLat = route[stepIndex][0] + latDiff * stepProgress;
+                            const newLon = route[stepIndex][1] + lonDiff * stepProgress;
+                            carMarker.setLatLng([newLat, newLon]);
+
+                            // Update current location every minute
+                            if (stepIndex % Math.max(1, Math.floor(route.length / 60)) === 0) {
+                                const currentLocation = await reverseGeocode([newLat, newLon]);
+                                currentLocationElement.textContent = `Current Location: ${currentLocation}`;
+								;
+                            }
+
+                            // Update time remaining
+                            const remainingDistance = route.slice(stepIndex).reduce((acc, curr, idx, arr) => {
+                                if (idx === 0) return acc;
+                                return acc + map.distance(arr[idx - 1], curr);
+                            }, 0);
+                            const remainingTime = remainingDistance / speed; // seconds
+                            const minutes = Math.floor(remainingTime / 60);
+                            const seconds = Math.floor(remainingTime % 60);
+                            timeRemainingElement.textContent = `Time Remaining: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                            // Update next major city
+                            const nextCity = majorCitiesAlongRoute.find(city => map.distance([newLat, newLon], city.coords) < 50000);
+                            if (nextCity) {
+                                nextCityElement.textContent = `Next Major City: ${nextCity.city}, ${nextCity.state}`;
+                            }
+                        }
+                    }, interval);
+                };
+
+                moveCar();
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
