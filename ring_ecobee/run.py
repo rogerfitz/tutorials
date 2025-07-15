@@ -7,7 +7,7 @@ from config import ECOBEE_EMAIL, ECOBEE_PASSWORD, EMAIL_USER, EMAIL_PASSWORD
 
 async def set_ecobee(away=False):
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False, slow_mo=1000)
+        browser = await p.chromium.launch(headless=True, slow_mo=1000)#switch to headless=False if you want to watch
         page = await browser.new_page()
         await page.goto("https://auth.ecobee.com/u/login/")
 
