@@ -1,0 +1,9 @@
+name: ring_ecobee
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - pip
+  - pip:
+    - playwright=1.53.0

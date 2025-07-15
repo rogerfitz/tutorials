@@ -29,7 +29,7 @@
         <label for="time">Driving Time (hours):</label>
         <input type="number" id="time" value="9" min="1">
         <label for="departure">Departure Time:</label>
-        <input type="datetime-local" id="departure" value="2025-01-16T07:30">
+        <input type="datetime-local" id="departure" value="2025-01-16T07:30"><!-- TODO Change to current time minus 2 hours-->
         <button id="startButton">Start</button>
     </div>
     <div class="info">
@@ -197,8 +197,8 @@
                             const newLon = route[stepIndex][1] + lonDiff * stepProgress;
                             carMarker.setLatLng([newLat, newLon]);
 
-                            // Update current location every minute
-                            if (stepIndex % Math.max(1, Math.floor(route.length / 60)) === 0) {
+                            // Update current location details (city, county, state) every 5 minutes. Car position is updated above
+                            if (stepIndex % Math.max(1, Math.floor(route.length / 300)) === 0) {
                                 const currentLocation = await reverseGeocode([newLat, newLon]);
                                 currentLocationElement.textContent = `Current Location: ${currentLocation}`;
 								;
