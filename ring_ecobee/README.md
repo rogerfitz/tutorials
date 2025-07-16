@@ -19,5 +19,5 @@ python -m playwright install chromium
 ```
 Run with python run.py. Setup with Cron to run every 5 minutes.
 ```
-*/5 * * * * ... cd /home/ubuntu/ && /home/ubuntu/miniconda3/envs/ring_ecobee/bin/python /home/ubuntu/tutorials/ring_ecobee/run.py > /home/ubuntu/ring_ecobee.log
+*/5 * * * * cd /home/ubuntu/ && /home/ubuntu/miniconda3/envs/ring_ecobee/bin/python /home/ubuntu/tutorials/ring_ecobee/run.py > /home/ubuntu/ring_ecobee.log
 ```
