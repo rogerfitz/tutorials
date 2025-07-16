@@ -1,4 +1,4 @@
-# March Madness Predictions Using the Crowd
+# Rincobee - Connecting your Ring with Ecobee
 Integration between Ring and Ecobee to set to away when you leave
 ## Install
 If this is your first tutorial you've used please start with installing miniconda and cloning the repo.  
