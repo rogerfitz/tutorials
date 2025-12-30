@@ -1,0 +1,12 @@
+name: fun_with_waveforms
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - numpy
+  - matplotlib
+  - scipy
+  - jupyter
+  - pip
+  - pip:
+    - notebook==6.0
