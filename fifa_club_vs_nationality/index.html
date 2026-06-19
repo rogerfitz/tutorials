@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 World Cup Squad Insights Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+    <style>
+        body { overflow-x: hidden; }
+        .node rect { fill-opacity: 0.85; cursor: pointer; transition: fill-opacity 0.15s; }
+        .node rect:hover { fill-opacity: 1; }
+        .node text { font-size: 12px; font-weight: 600; fill: #1e293b; pointer-events: none; }
+
+        .link { fill: none; stroke: #e2e8f0; stroke-opacity: 0.4; transition: stroke-opacity 0.15s, stroke 0.15s; cursor: pointer; }
+        .link:hover { stroke-opacity: 0.85 !important; stroke: #6366f1 !important; }
+        .link.overlap-active { stroke: #f59e0b; stroke-opacity: 0.5; }
+        .link.overlap-active:hover { stroke: #d97706 !important; stroke-opacity: 0.9 !important; }
+        .faded { stroke-opacity: 0.05 !important; }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex flex-col gap-4">
+
+    <header class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+        <div>
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">🏆 2026 World Cup Pipeline <span class="font-normal text-lg ml-2">🧤🛡️👟⚽</span></h1>
+            <p class="text-gray-500 text-sm mt-1">Sankey flow mapping international squads to domestic clubs. Type or click in options to filter.</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center gap-4 bg-gray-50 p-2 border border-gray-200 rounded-lg">
+            <div class="flex bg-gray-200 p-1 rounded-md shrink-0 w-full md:w-auto">
+                <button id="btn-explore" class="px-4 py-1.5 text-sm font-medium rounded text-gray-500 hover:text-gray-800 cursor-pointer w-1/2 md:w-auto">Explore</button>
+                <button id="btn-compare" class="px-4 py-1.5 text-sm font-medium rounded bg-white text-gray-800 shadow-sm cursor-pointer w-1/2 md:w-auto">Compare</button>
+            </div>
+
+            <div id="explore-controls" class="hidden flex-col md:flex-row items-center gap-2 w-full md:w-auto">
+                <div class="relative w-full md:w-48">
+                    <input id="input-country" list="countries-list" placeholder="🔍 Click or Type Country..." class="w-full bg-white border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <datalist id="countries-list"></datalist>
+                </div>
+                <span class="text-xs font-bold text-gray-400">OR</span>
+                <div class="relative w-full md:w-48">
+                    <input id="input-club" list="clubs-list" placeholder="🔍 Click or Type Club..." class="w-full bg-white border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <datalist id="clubs-list"></datalist>
+                </div>
+            </div>
+
+            <div id="compare-controls" class="flex flex-col md:flex-row items-center gap-2 w-full md:w-auto">
+                <div class="relative w-full md:w-48">
+                    <input id="input-compare-a" list="countries-list" placeholder="🔍 Country A..." class="w-full bg-white border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <span class="text-xs font-bold text-amber-500">VS</span>
+                <div class="relative w-full md:w-48">
+                    <input id="input-compare-b" list="countries-list" placeholder="🔍 Country B..." class="w-full bg-white border border-gray-300 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-4 items-start">
+
+        <div class="xl:col-span-3 bg-white p-5 rounded-xl shadow-sm border border-gray-200 h-[600px] flex flex-col">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4" id="stats-title">Representation</h3>
+            <ul id="stats-list" class="text-sm space-y-3 text-gray-600 custom-scrollbar overflow-y-auto pr-2 flex-grow">
+                </ul>
+        </div>
+
+        <div class="xl:col-span-4 bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center justify-start relative h-[600px]">
+            <div id="chart-tooltip" class="absolute top-4 left-4 bg-gray-900 text-white px-3 py-2 rounded-md text-xs font-medium shadow-lg pointer-events-none opacity-0 transition-opacity z-10"></div>
+            <div id="chart" class="w-full h-[560px]"></div>
+        </div>
+
+        <div class="xl:col-span-5 bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col overflow-hidden h-[600px]">
+            <div class="bg-gray-50 border-b border-gray-200 px-5 py-4 flex justify-between items-center shrink-0">
+                <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wide truncate pr-4" id="table-title">Player Roster</h3>
+                <span id="player-count" class="bg-indigo-100 text-indigo-800 text-xs px-2.5 py-1 rounded-md font-bold whitespace-nowrap">0 Players</span>
+            </div>
+            <div class="overflow-y-auto custom-scrollbar flex-grow">
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs text-gray-400 uppercase bg-white sticky top-0 shadow-sm z-10">
+                        <tr>
+                            <th scope="col" class="px-5 py-3 bg-white">Player</th>
+                            <th scope="col" class="px-5 py-3 bg-white">Pos</th>
+                            <th scope="col" class="px-5 py-3 bg-white">Country</th>
+                            <th scope="col" class="px-5 py-3 bg-white">Club</th>
+                        </tr>
+                    </thead>
+                    <tbody id="player-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let globalData = [];
+        let currentMode = 'compare';
+        let currentFilteredData = [];
+        let globalCountries = new Set();
+        let globalClubs = new Set();
+
+        const posEmojis = { "Goalkeeper": "🧤", "Defender": "🛡️", "Midfielder": "👟", "Forward": "⚽" };
+        const countryFlags = {
+            "United States": "🇺🇸", "Australia": "🇦🇺", "Czech Republic": "🇨🇿", "Mexico": "🇲🇽",
+            "South Africa": "🇿🇦", "South Korea": "🇰🇷", "Bosnia and Herzegovina": "🇧🇦", "Canada": "🇨🇦",
+            "Qatar": "🇶🇦", "Switzerland": "🇨🇭", "Brazil": "🇧🇷", "Haiti": "🇭🇹", "Morocco": "🇲🇦",
+            "Scotland": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "Paraguay": "🇵🇾", "Turkey": "🇹🇷", "Curaçao": "🇨🇼", "Ecuador": "🇪🇨",
+            "Germany": "🇩🇪", "Ivory Coast": "🇨🇮", "Japan": "🇯🇵", "Netherlands": "🇳🇱", "Sweden": "🇸🇪",
+            "Tunisia": "🇹🇳", "Belgium": "🇧🇪", "Egypt": "🇪🇬", "Iran": "🇮🇷", "New Zealand": "🇳🇿",
+            "Cape Verde": "🇨🇻", "Saudi Arabia": "🇸🇦", "Spain": "🇪🇸", "Uruguay": "🇺🇾", "France": "🇫🇷",
+            "Iraq": "🇮🇶", "Norway": "🇳🇴", "Senegal": "🇸🇳", "Algeria": "🇩🇿", "Argentina": "🇦🇷",
+            "Austria": "🇦🇹", "Jordan": "🇯🇴", "Colombia": "🇨🇴", "DR Congo": "🇨🇩", "Portugal": "🇵🇹",
+            "Uzbekistan": "🇺🇿", "Croatia": "🇭🇷", "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿󠁿󠁮", "Ghana": "🇬🇭", "Panama": "🇵🇦"
+        };
+
+        //Data Source https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_squads
+        d3.csv("2026_world_cup_team_affiliations.csv").then(data => {
+            globalData = data;
+            populateDatalists();
+
+            // Native autocomplete configuration mapping inputs to state triggers
+            d3.select("#input-country").on("input", function() {
+                if(globalCountries.has(this.value) || this.value === "") {
+                    d3.select("#input-club").property("value", "");
+                    updateVisualization();
+                }
+            });
+            d3.select("#input-club").on("input", function() {
+                if(globalClubs.has(this.value) || this.value === "") {
+                    d3.select("#input-country").property("value", "");
+                    updateVisualization();
+                }
+            });
+            d3.select("#input-compare-a").on("input", function() { if(globalCountries.has(this.value)) updateVisualization(); });
+            d3.select("#input-compare-b").on("input", function() { if(globalCountries.has(this.value)) updateVisualization(); });
+
+            setMode('compare', document.getElementById('btn-compare'));
+        });
+
+        d3.select("#btn-explore").on("click", function() { setMode('explore', this); });
+        d3.select("#btn-compare").on("click", function() { setMode('compare', this); });
+
+        function setMode(mode, btnElement) {
+            currentMode = mode;
+            d3.selectAll("#btn-explore, #btn-compare").classed("bg-white text-gray-800 shadow-sm", false).classed("text-gray-500 hover:text-gray-800", true);
+            d3.select(btnElement).classed("bg-white text-gray-800 shadow-sm", true).classed("text-gray-500 hover:text-gray-800", false);
+            d3.select("#explore-controls").style("display", mode === 'explore' ? 'flex' : 'none');
+            d3.select("#compare-controls").style("display", mode === 'compare' ? 'flex' : 'none');
+            updateVisualization();
+        }
+
+        function populateDatalists() {
+            const countries = Array.from(new Set(globalData.map(d => d.international_team))).sort();
+            const clubs = Array.from(new Set(globalData.map(d => d.club_team))).sort();
+            globalCountries = new Set(countries);
+            globalClubs = new Set(clubs);
+
+            // Populate native lists
+            const cList = d3.select("#countries-list");
+            countries.forEach(c => cList.append("option").attr("value", c));
+
+            const cbList = d3.select("#clubs-list");
+            clubs.forEach(c => cbList.append("option").attr("value", c));
+
+            // Set USA and Australia as default comparison mapping configurations
+            const defaultA = countries.includes("United States") ? "United States" : countries[0];
+            const defaultB = countries.includes("Australia") ? "Australia" : (countries[1] || countries[0]);
+            d3.select("#input-compare-a").property("value", defaultA);
+            d3.select("#input-compare-b").property("value", defaultB);
+
+            // Pick a globally popular club asset among wealth professionals (Real Madrid) if present
+            const plannerClub = clubs.includes("Real Madrid") ? "Real Madrid" : (clubs[0] || "");
+            d3.select("#input-club").property("value", plannerClub);
+        }
+
+        function updateVisualization() {
+            const container = document.getElementById("chart");
+            const chartWidth = container.clientWidth;
+            const chartHeight = container.clientHeight;
+
+            d3.select("#chart").selectAll("*").remove();
+            let filteredData = [];
+            let mutualClubs = [];
+            let teamA = "", teamB = "";
+
+            if (currentMode === 'explore') {
+                const country = d3.select("#input-country").property("value");
+                const club = d3.select("#input-club").property("value");
+
+                if (country && globalCountries.has(country)) {
+                    filteredData = globalData.filter(d => d.international_team === country);
+                    updateRepresentationList(filteredData, 'club_team', `${countryFlags[country] || '🏳️'} ${country} Clubs`);
+                } else if (club && globalClubs.has(club)) {
+                    filteredData = globalData.filter(d => d.club_team === club);
+                    updateRepresentationList(filteredData, 'international_team', `${club} Int'l Spread`);
+                } else {
+                    filteredData = globalData;
+                    d3.select("#stats-title").text("System Status");
+                    d3.select("#stats-list").html("<li class='text-amber-600 font-medium'>⚠️ Type/Select a matching asset.</li>");
+                }
+            } else {
+                teamA = d3.select("#input-compare-a").property("value");
+                teamB = d3.select("#input-compare-b").property("value");
+
+                if (!globalCountries.has(teamA) || !globalCountries.has(teamB)) return;
+
+                filteredData = globalData.filter(d => d.international_team === teamA || d.international_team === teamB);
+
+                const clubsA = new Set(globalData.filter(d => d.international_team === teamA).map(d => d.club_team));
+                const clubsB = new Set(globalData.filter(d => d.international_team === teamB).map(d => d.club_team));
+                mutualClubs = [...clubsA].filter(club => clubsB.has(club));
+
+                updateComparisonStats(filteredData, teamA, teamB, mutualClubs);
+            }
+
+            currentFilteredData = filteredData;
+            renderPlayerList(currentFilteredData, "Active Selection");
+
+            if (filteredData.length === 0) return;
+
+            const uniqueNodes = Array.from(new Set(filteredData.flatMap(d => [d.international_team, d.club_team])));
+            const nodes = uniqueNodes.map(name => ({ name, isCountry: globalCountries.has(name) }));
+            const nodeMap = new Map(nodes.map((d, i) => [d.name, i]));
+
+            const linkCounts = d3.rollups(filteredData, v => v.length, d => d.international_team, d => d.club_team);
+            const links = [];
+            linkCounts.forEach(([source, targets]) => {
+                targets.forEach(([target, value]) => {
+                    links.push({
+                        source: nodeMap.get(source),
+                        target: nodeMap.get(target),
+                        value: value,
+                        isOverlap: mutualClubs.includes(target)
+                    });
+                });
+            });
+
+            const svg = d3.select("#chart").append("svg").attr("width", chartWidth).attr("height", chartHeight);
+
+            const sankey = d3.sankey().nodeWidth(14).nodePadding(12).extent([[10, 10], [chartWidth - 10, chartHeight - 10]]);
+
+            const graph = sankey({
+                nodes: nodes.map(d => Object.assign({}, d)),
+                links: links.map(d => Object.assign({}, d))
+            });
+
+            const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
+
+            const linkElements = svg.append("g")
+                .selectAll(".link")
+                .data(graph.links)
+                .join("path")
+                .attr("class", d => d.isOverlap ? "link overlap-active" : "link")
+                .attr("d", d3.sankeyLinkHorizontal())
+                .attr("stroke-width", d => Math.max(1.5, d.width))
+                .on("mouseover", (event, d) => {
+                    const activePlayers = currentFilteredData.filter(p => p.international_team === d.source.name && p.club_team === d.target.name);
+                    renderPlayerList(activePlayers, `${d.source.name} ➔ ${d.target.name}`);
+                    d3.select("#chart-tooltip").style("opacity", 1).html(`<strong>${d.source.name}</strong> ➔ <strong>${d.target.name}</strong><br/>Pipeline: ${d.value} Player(s)`);
+                })
+                .on("mousemove", (event) => {
+                    d3.select("#chart-tooltip").style("left", (event.offsetX + 20) + "px").style("top", (event.offsetY + 20) + "px");
+                })
+                .on("mouseout", () => {
+                    d3.select("#chart-tooltip").style("opacity", 0);
+                    renderPlayerList(currentFilteredData, "Active Selection");
+                });
+
+            const nodeElements = svg.append("g")
+                .selectAll(".node")
+                .data(graph.nodes)
+                .join("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+            nodeElements.append("rect")
+                .attr("height", d => d.y1 - d.y0)
+                .attr("width", sankey.nodeWidth())
+                .attr("fill", d => {
+                    if (currentMode === 'compare' && mutualClubs.includes(d.name)) return "#f59e0b";
+                    return d.isCountry ? colorScale(d.name) : "#94a3b8";
+                })
+                .attr("stroke", d => d3.rgb(d.isCountry ? colorScale(d.name) : "#64748b").darker(0.5))
+                .on("mouseover", (event, d) => {
+                    linkElements.classed("faded", l => l.source.name !== d.name && l.target.name !== d.name);
+                    const activePlayers = currentFilteredData.filter(p => p.international_team === d.name || p.club_team === d.name);
+                    renderPlayerList(activePlayers, `Roster for ${d.name}`);
+                })
+                .on("mouseout", () => {
+                    linkElements.classed("faded", false);
+                    renderPlayerList(currentFilteredData, "Active Selection");
+                });
+
+            nodeElements.append("text")
+                .attr("x", d => d.x0 < chartWidth / 2 ? 6 + sankey.nodeWidth() : -6)
+                .attr("y", d => (d.y1 - d.y0) / 2)
+                .attr("dy", "0.35em")
+                .attr("text-anchor", d => d.x0 < chartWidth / 2 ? "start" : "end")
+                .text(d => d.isCountry ? `${countryFlags[d.name] || '🏳️'} ${d.name}` : d.name);
+        }
+
+        function renderPlayerList(players, titleText) {
+            d3.select("#table-title").text(titleText);
+            d3.select("#player-count").text(`${players.length}`);
+            const tbody = d3.select("#player-table-body").html("");
+
+            if (players.length === 0) {
+                tbody.append("tr").html(`<td colspan="4" class="px-5 py-8 text-center text-gray-400">No players found</td>`);
+                return;
+            }
+
+            players.forEach(p => {
+                const row = tbody.append("tr").attr("class", "bg-white border-b hover:bg-indigo-50 transition-colors");
+                row.append("td").attr("class", "px-5 py-2.5 font-semibold text-gray-900").text(p.name);
+                row.append("td").attr("class", "px-5 py-2.5 whitespace-nowrap").text(`${posEmojis[p.position] || '🏃'} ${p.position}`);
+                row.append("td").attr("class", "px-5 py-2.5 whitespace-nowrap").text(`${countryFlags[p.international_team] || '🏳️'} ${p.international_team}`);
+                row.append("td").attr("class", "px-5 py-2.5 truncate max-w-[140px]").text(p.club_team);
+            });
+        }
+
+        function updateRepresentationList(data, keyField, title) {
+            d3.select("#stats-title").text(title);
+            const counts = d3.rollups(data, v => v.length, d => d[keyField]).sort((a, b) => b[1] - a[1]);
+            const listSelection = d3.select("#stats-list").html("");
+
+            counts.slice(0, 15).forEach(([name, count]) => {
+                const prefix = keyField === 'international_team' ? (countryFlags[name] || '🏳️') + ' ' : '';
+                listSelection.append("li")
+                    .html(`<div class="flex justify-between border-b border-slate-100 pb-2">
+                            <span class="truncate font-medium text-slate-700 max-w-[160px]" title="${name}">${prefix}${name}</span>
+                            <span class="bg-slate-100 text-slate-700 text-xs px-2 py-0.5 rounded-full font-bold h-fit">${count}</span>
+                           </div>`);
+            });
+        }
+
+        function updateComparisonStats(data, teamA, teamB, mutualClubs) {
+            d3.select("#stats-title").text("Overlap Analysis");
+            const listSelection = d3.select("#stats-list").html("");
+
+            if(mutualClubs.length > 0) {
+                listSelection.append("li").attr("class", "text-xs font-bold text-amber-600 uppercase mb-2 tracking-wide").text("💥 Shared Pipeline Assets:");
+                mutualClubs.forEach(club => {
+                    const assetPlayers = data.filter(d => d.club_team === club);
+                    const clubHeader = listSelection.append("li").attr("class", "mt-3 bg-amber-50 border border-amber-200 p-2 rounded-lg");
+                    clubHeader.append("div").attr("class", "font-bold text-amber-900 text-sm").text(club);
+
+                    const playerSublist = clubHeader.append("ul").attr("class", "text-xs space-y-1 mt-1 text-slate-600 pl-1");
+                    assetPlayers.forEach(p => {
+                        playerSublist.append("li").text(`${countryFlags[p.international_team] || '🏳️'} ${p.name} (${posEmojis[p.position] || ''})`);
+                    });
+                });
+            } else {
+                listSelection.append("li").attr("class", "text-xs text-slate-400 italic").text(`No shared clubs found between ${teamA} and ${teamB}.`);
+            }
+        }
+    </script>
+</body>
+</html>
